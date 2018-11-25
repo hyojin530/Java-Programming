@@ -1,0 +1,37 @@
+package HW3_1;
+
+public class Consumer extends Thread {
+	private Bakery bakery;
+	private int number;
+	public int bread = 0;
+	
+	public Consumer(Bakery bakery, int number) {
+		this.bakery = bakery;
+		this.number = number;
+	}
+	
+	public void run() {
+		for(;;) {
+			bakery.get(number);
+			bread += 5;
+			
+			if(bread == 20) {
+				Bakery.end_game = true;
+				System.out.println("\n: Done");
+				System.out.println("=> Consumer "+number+" won the game! (first ate 20 breads)");
+				break;
+			}
+			
+			if(Bakery.end_game == true) {
+				break;
+			}
+			
+			try {
+				sleep((int)(Math.random()*100));
+			} catch(InterruptedException ex) {
+				System.out.println(ex);
+			}
+		}
+		
+	}
+}

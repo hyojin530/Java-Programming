@@ -1,0 +1,44 @@
+package Try;
+
+public class Bakery {
+	//declare an static integer variable to count the number of breads in bakery
+	private static int total = 0;
+	//declare an static boolean variable to end the game
+	public static boolean end_game = false;
+	
+	//synchronized method used in Consumer class to get 5 breads
+	public synchronized void get(int who) {
+		
+		if(total<5) {	//when total is less than 5,
+			try {
+				wait();		//thread will be in waiting state
+			} catch(InterruptedException ex) {	
+				System.out.println(ex);	//catch an interrupted exception
+			}
+		}
+
+		//subtract 5 from total because consumer took 5 breads
+		total -= 5;	
+		//print out which consumer got the breads and how many breads are left in bakery
+		System.out.println("Consumer "+who+" got: 5 (Total # of Breads = "+total+")");
+		notifyAll();	//wake up all the other threads
+		return;			//end the method
+	}
+	
+	//synchronized method used in Producer class to put some breads
+	public synchronized void put(int who, int value) {
+		try {	//make the thread sleep for 0~100 milliseconds randomly
+			wait();
+		} catch(InterruptedException ex) {	//catch an interrupted exception
+			System.out.println(ex);
+		}
+		
+		//add value to total because value is the number of breads made by producer
+		total += value;
+		//print out which producer put how many breads and how many breads are in bakery
+		System.out.println("Producer "+who+" put: "+value+" (Total # of Breads = "+total+")");
+		notifyAll();	//wake up all the other threads
+		return;			//end the method
+	}
+}
+

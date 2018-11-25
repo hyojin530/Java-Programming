@@ -1,0 +1,19 @@
+package HW3_1;
+
+public class HW3_1 {
+
+	public static void main(String[] args) {
+		Bakery2 bakery = new Bakery2();				//create an Bakery instance bakery
+		Producer pro1 = new Producer(bakery, 1);	//create an Producer instance pro1
+		Producer pro2 = new Producer(bakery, 2);	//create an Producer instance pro2
+		Consumer con1 = new Consumer(bakery, 1);	//create an Consumer instance con1
+		Consumer con2 = new Consumer(bakery, 2);	//create an Consumer instance con2
+		
+		pro1.start();	//make a new thread in pro1
+		pro2.start();	//make a new thread in pro2
+		con1.start();	//make a new thread in con1
+		con2.start();	//make a new thread in con2
+		
+	}
+	
+}

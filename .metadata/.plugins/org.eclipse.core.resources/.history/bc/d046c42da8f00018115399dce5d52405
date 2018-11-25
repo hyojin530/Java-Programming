@@ -1,0 +1,13 @@
+import java.util.ArrayList;
+
+public class Try {
+
+	public static void main(String[] args) {
+		
+		char ch = 'A';
+		
+		System.out.println((int)ch);
+
+	}
+
+}

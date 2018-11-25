@@ -1,0 +1,90 @@
+package HW3_2;
+
+import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class HW3_2 {
+
+	public static void main(String[] args) {
+		
+		JFrame frame = new JFrame();
+		
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridLayout(4, 2));
+		
+		JLabel label1 = new JLabel("# of Producers: ");
+		p1.add(label1);
+		JTextField text1 = new JTextField("enter the number");
+		p1.add(text1);
+		
+		JLabel label2 = new JLabel("# of Consumers: ");
+		p1.add(label2);
+		JTextField text2 = new JTextField("enter the number");
+		p1.add(text2);
+		
+		JLabel label3 = new JLabel("Consumption Unit: ");
+		p1.add(label3);
+		JTextField text3 = new JTextField("enter the number");
+		p1.add(text3);
+		
+		JLabel label4 = new JLabel("Tatal #: ");
+		p1.add(label4);
+		JTextField text4 = new JTextField("enter the number");
+		p1.add(text4);
+		
+		JPanel p2 = new JPanel();
+		JButton button1 = new JButton("start");
+		button1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e){
+						String num_pro = text1.getText();
+						int x = Integer.parseInt(num_pro);
+						
+						String num_con = text2.getText();
+						int y = Integer.parseInt(num_con);
+						
+						String c_unit = text3.getText();
+						int m = Integer.parseInt(c_unit);
+						
+						String num_tot= text4.getText();
+						int n = Integer.parseInt(num_tot);
+						
+						int i;
+						
+						Bakery2 bakery = new Bakery2();
+						bakery.bread_at = m;
+						bakery.bread_end = n;
+						
+						ArrayList<Producer2> proList = new ArrayList<Producer2>();
+						ArrayList<Consumer2> conList = new ArrayList<Consumer2>();
+						
+						for(i=0; i<x; i++) {
+							proList.add(new Producer2(bakery, i+1));
+						}
+						for(i=0; i<y; i++) {
+							conList.add(new Consumer2(bakery, i+1));
+						}
+							
+						for(i=0; i<x; i++) {
+							proList.get(i).start();
+						}
+						for(i=0; i<y; i++) {
+							conList.get(i).start();
+						}
+					}
+				});
+		p2.add(button1);
+		
+		frame.setLayout(new BorderLayout());
+		frame.add(p1, BorderLayout.CENTER);
+		frame.add(p2, BorderLayout.SOUTH);
+		
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("HW#3-2 Input Window");
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);	
+	}
+	
+}

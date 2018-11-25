@@ -1,0 +1,41 @@
+package HW3_1;
+
+public class Bakery {
+	//declare an static integer variable to count the number of breads in bakery
+	private static int total = 0;
+	//declare an static boolean variable to end the game
+	public static boolean end_game = false;
+	
+	//synchronized method used in Consumer class to get 5 breads
+	public synchronized void get(int who) {
+		if(end_game == true) {	//if end_game is true,
+			notifyAll();		//wake up all the threads
+			return;				//end the method
+		}
+		
+		while(total<5) {	//when total is less than 5,
+			try {
+				wait();		//thread will be in waiting state
+			} catch(InterruptedException ex) {	
+				System.out.println(ex);	//catch an interrupted exception
+			}
+		}
+
+		total -= 5;
+		System.out.println("Consumer "+who+" got: 5 (Total # of Breads = "+total+")");
+		notifyAll();
+		return;
+	}
+	
+	public synchronized void put(int who, int value) {
+		if(end_game == true) {
+			notifyAll();
+			return;
+		}
+
+		total += value;
+		System.out.println("Producer "+who+" put: "+value+" (Total # of Breads = "+total+")");
+		notifyAll();
+		return;
+	}
+}

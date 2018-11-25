@@ -1,0 +1,39 @@
+package HW3_1;
+
+//Consumer inherits from a superclass of Thread
+public class Consumer extends Thread {
+	private Bakery bakery;	//declare an instance of Bakery
+	private int number;		//declare an integer variable 
+	public int bread = 0;	//declare an integer variable to count the number of breads obtained
+	
+	public Consumer(Bakery bakery, int number) {
+		this.bakery = bakery;	//set bakery variable
+		this.number = number;	//set number variable
+	}
+	
+	public void run() {
+		for(;;) {
+			bakery.get(number);
+			
+			if(Bakery.end_game == true) {
+				break;
+			}
+			
+			bread += 5;
+			
+			if(bread == 20) {
+				Bakery.end_game = true;
+				System.out.println("\n: Done");
+				System.out.println("=> Consumer "+number+" won the game! (first ate 20 breads)");
+				break;
+			}
+			
+			try {
+				sleep((int)(Math.random()*100));
+			} catch(InterruptedException ex) {
+				System.out.println(ex);
+			}
+		}
+		
+	}
+}
